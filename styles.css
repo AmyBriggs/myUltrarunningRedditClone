@@ -2,12 +2,28 @@ body {
   background-color: white;
 }
 
+.nav-container {
+  background-color: #0944AB;
+}
+
+#header {
+  color: #EBF2FA;
+}
+
+.dropdown {
+  color: #EBF2FA;
+}
+
+#menu {
+  color: black;
+}
+
 .posts {
   list-style-type: none;
   min-height: 23rem;
   /*border: 2px solid #cfcfcf;*/
   border-radius: 4px;
-  background-color: #F1F57A;
+  background-color: #EBF2FA;
   margin-top: 1rem;
   overflow: auto;
 }
@@ -27,7 +43,7 @@ img {
 
 .post-view-design {
   border-radius: 5px;
-  background-color: #F1F57A;
+  background-color: #EBF2FA;
   border: 1px solid #e8e8e8;
   padding-bottom: 1rem;
 }
