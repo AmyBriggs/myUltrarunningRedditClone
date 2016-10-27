@@ -28,19 +28,25 @@
 
             <div class="navbar-form navbar-left">
                 <li class="dropdown">
-                    Search by:&nbsp;&nbsp;
+                    Sort by:&nbsp;&nbsp;
                     <select ng-model="dropdown" id="menu">
-                        <option id="votes" value="votes">Votes</option>
-                        <option id="date" value="date">Date</option>
+                        <option id="votes" value="-votes">Votes</option>
+                        <option id="date" value="-date">Date</option>
                         <option id="title" value="title">Title</option>
                     </select>
                 </li>
             </div>
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="view.search" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Go!</button>
+            </form>
         </div>
 
     </nav>
 
-    <!-- Container for Post View -->
+    <!-- Container for Post Form -->
 
     <div class="container-fluid" ng-show="createPostForm" id="post-view" ng-cloak>
         <div class="row">
@@ -49,7 +55,7 @@
                     <h1 class="text-center">Add a Post</h1></div>
 
 
-                    <!-- ng-submit="submitForm(postForm.$valid)" -->
+                <!-- ng-submit="submitForm(postForm.$valid)" -->
                 <form name="postForm" novalidate>
                     <div class="form-group" ng-class="{ 'has-error' : newPost.title.$invalid && !newPost.title.$pristine,
                     'has-success' : newPost.title.$valid}">
@@ -94,7 +100,7 @@
         <div class="row">
             <ul class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
 
-                <li ng-repeat="post in posts | orderBy: '-votes' | orderBy: title " class="posts col-lg-12">
+                <div ng-repeat="post in view.posts | orderBy: dropdown | filter: view.search" class="posts col-lg-12">
 
                     <img ng-src="{{ post.image }}" alt="Image" class="col-lg-3" />
                     <h4>{{ post.title }}  |
@@ -108,47 +114,41 @@
                     <br>
                     <br>
 
-                    <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>&nbsp;&nbsp;{{ post.date | date: 'fullDate'}} |
+                    <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>&nbsp;&nbsp; {{ post.momentDate }}
                     <i class="glyphicon glyphicon-comment" aria-hidden="true"></i>&nbsp;&nbsp;{{ post.comments.length }}
-                    <a href="" ng-click="toggleComments()">
+                    <a href="" ng-click="toggleComments(post)">
                         <ng-pluralize count="post.comments.length" when="{ '1': ' Comment', 'other': ' Comments'}">
                     </a> &nbsp;&nbsp;|&nbsp;&nbsp;
 
                     <!-- Add Comment -->
 
-                    <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i><a href="" ng-click="commentView=true"> Add comment</a>
+                    <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i><a href="" ng-click="toggleComments(post)"> Add comment</a>
                     <br>
                     <br>
 
-                    <div class="col-lg-12" ng-show="commentView" id="comment-view">
-                        <!-- <p class="text-center">--__--__--__--__--<a href="" ng-click="commentView=false"> Collapse Comments </a>--__--__--__--__--</p> -->
+                    <div class="col-lg-12" ng-show="post.commentView" id="comment-view">
 
                         <form name="post.commentForm" ng-submit="post.submitCommentForm()">
                             <!-- Add comment -->
                             <label for="author">Author</label>
-                            <input type="text" name="author" ng-model="newComment.author" required>
+                            <input type="text" id="by" name="author" ng-model="newComment.author" required>
                             <label for="comment">Comment</label>
-                            <input type="text" name="comment" ng-model="newComment.comment" required>
+                            <input type="text" id="content" name="comment" ng-model="newComment.comment" required>
 
                             <button type="button" name="button" ng-click="submitComment(post)">submit comment</button>
                         </form>
 
-                        <ul ng-repeat="data in post.comments">
-                            <li>
-                                <p>
-                                    "{{ data.comment }}"
-                                </p>
-                                <small>{{ data.date | date: 'fullDate '}}</small>
-                                <br>
-                                <small> - {{ data.author }}</small>
-                                <br>
-                                <br>
+
+                        <div ng-repeat="data in post.comments">
+
+                            <p>{{ data.comment }} <small>&nbsp;&nbsp; - {{ data.author }}</small></p>
+                            <!-- <small>{{ data.date | date: 'fullDate '}}</small> -->
 
 
 
-                            </li>
 
-                        </ul>
+                        </div>
+
 
 
 
@@ -156,7 +156,7 @@
 
 
 
-                </li>
+                </div>
 
             </ul>
 
@@ -170,6 +170,9 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js">
+
+    </script>
     <!-- <script src="components/moment/moment.js"></script>
     <script src="components/angular-moment/angular-moment.js"></script> -->
     <script src="app.js"></script>

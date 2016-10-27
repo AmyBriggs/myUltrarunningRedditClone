@@ -3,15 +3,15 @@ body {
 }
 
 .nav-container {
-  background-color: #0944AB;
+  background-color: #EBF2FA;
 }
 
 #header {
-  color: #EBF2FA;
+  color: black;
 }
 
 .dropdown {
-  color: #EBF2FA;
+  color: black;
 }
 
 #menu {
@@ -70,5 +70,5 @@ img {
 }
 
 select {
-  background-color: #fbedcf;
+  background-color: white;
 }
