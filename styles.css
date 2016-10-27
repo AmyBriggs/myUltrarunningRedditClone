@@ -7,25 +7,32 @@ body {
 }
 
 #header {
-  color: black;
+  color: #010821;
 }
 
 .dropdown {
-  color: black;
+  color: #010821;
 }
 
 #menu {
-  color: black;
+  color: #010821;
 }
 
+#go {
+  color: #010821;
+}
+
+.glyphicon {
+  color: #010821;
+}
 .posts {
   list-style-type: none;
   min-height: 23rem;
-  /*border: 2px solid #cfcfcf;*/
   border-radius: 4px;
   background-color: #EBF2FA;
   margin-top: 1rem;
   overflow: auto;
+  color: #010821;
 }
 
 img {
@@ -71,4 +78,30 @@ img {
 
 select {
   background-color: white;
+}
+
+.ng-enter {
+  transition: 0.5s linear all;
+  opacity:0;
+  animation: fadeInUp;
+
+}
+
+.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+
+.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+/*This is for our hiding (this is not a class from ng-animate)*/
+.ng-hide {
+  transition:0.5s linear all;
+  opacity:0;
 }

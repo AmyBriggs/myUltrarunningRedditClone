@@ -1,9 +1,6 @@
-const redditClone = angular.module("redditClone", [])
+const redditClone = angular.module("redditClone", ['ngAnimate'])
 
-redditClone.controller("MainController", ['$scope','$log', function($scope,$log) {
-  // $scope.date = moment().hour(8).minute(0).second(0).toDate()
-
-
+redditClone.controller("MainController", ['$scope', '$log', function($scope, $log) {
 
   $scope.createPostForm = false
   $scope.togglePostForm = function() {
@@ -28,38 +25,11 @@ redditClone.controller("MainController", ['$scope','$log', function($scope,$log)
     $scope.newPost = {}
   }
 
-  // $scope.submitForm = function(isValid) {
-  //   if (isValid) {
-  //     const newPost = new this.Post()
-  //     newPost.title = this.post.title
-  //     newPost.author = this.post.author
-  //     newPost.image = this.post.image
-  //     newPost.description = this.post.description
-  //     $scope.posts.push(newPost)
-  //     $scope.post = []
-  //     $scope.togglePostForm()
-  //   }
-  // }
-
-  // $scope.commentView = false
   $scope.toggleComments = function(post) {
-    $log.info('post================',post);
+    $log.info('post================', post);
     post.commentView = !post.commentView
-    // if($scope.post.commentView === false) {
-    //   $scope.post.commentView = true
-    // } else {
-    //   $scope.post.commentView = false
-    // }
+
   }
-
-  // $scope.clearComments =function() {
-  //   this.formComment.author = ''
-  //   this.formComment.comment = ''
-  // }
-  // $scope.setCommentView = function(post) {
-  //   $scope.post.commentView = true
-  // }
-
 
   function createId() {
     let id = $scope.view.posts.length
@@ -67,34 +37,28 @@ redditClone.controller("MainController", ['$scope','$log', function($scope,$log)
   }
 
   $scope.upvote = function(post) {
-    $log.info('post============',post)
+    $log.info('post============', post)
     post.votes++
   }
   $scope.downvote = function(post) {
-    $log.info('post============',post)
+    $log.info('post============', post)
     post.votes--
   }
-
-
-
 
   $scope.newComment = {}
   $scope.submitComment = function(post) {
     console.log(post.id);
     let id = post.id
-    var comment = angular.copy($scope.newComment)
+    var comment = angular.copy(post.newComment)
     $scope.view.posts[id].comments.push(comment)
-    // document.getElementById('by').value = ''
-    // document.getElementById('content').value = ''
+    post.newComment = {}
     $scope.toggleComments()
   }
 
- $scope.clearForm = function(){
-   document.getElementById('by').value = ''
-   document.getElementById('content').value = ''
- }
-
-
+  $scope.clearForm = function() {
+    document.getElementById('by').value = ''
+    document.getElementById('content').value = ''
+  }
 
   $scope.dropdown = '-votes'
   $scope.view = {}
@@ -102,55 +66,86 @@ redditClone.controller("MainController", ['$scope','$log', function($scope,$log)
 
 
   $scope.view.posts = [{
-      id: 0,
-      title: "I love Boulder",
-      author: "Amy Briggs",
-      image: "https://lonelyplanetimages.imgix.net/a/g/hi/t/12dec8938220093eb7f1fdb8a9ce40b8-the-rocky-mountains.jpg?sharp=10&vib=20&w=1200",
-      description: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen.",
-      date: new Date('October 15, 2016'),
+    id: 0,
+    title: "Western States 100",
+    author: "Amy Briggs",
+    image: "http://www.dirtproof.co.uk/wp-content/uploads/2014/07/Western-States-100M-2014-135.jpg",
+    description: "The Western States ® 100-Mile Endurance Run is the world’s oldest 100-mile trail race. Starting in Squaw Valley, California near the site of the 1960 Winter Olympics and ending 100.2 miles later in Auburn, California, Western States, in the decades since its inception in 1974, has come to represent one of the ultimate endurance tests in the world.",
+    date: new Date('October 15, 2016'),
 
-      momentDate: moment().subtract(2, 'days').calendar(),
-      votes: 2,
-      commentView: false,
-      comments: [
-        {
-        author: "Ranjit the cat",
-        comment: "I'm hungry!",
+    momentDate: moment().subtract(2, 'days').calendar(),
+    votes: 8,
+    commentView: false,
+    comments: [{
+      author: "Anton K",
+      comment: "Crushed that!",
 
-      },
-      {
-        author: "Reena",
-        comment: "Meow",
-
-      }
-      ]
-
-    },
-      {
-        id: 1,
-        title: "Let's go for a run!",
-        author: "Amy Briggs",
-        image: "https://lonelyplanetimages.imgix.net/a/g/hi/t/12dec8938220093eb7f1fdb8a9ce40b8-the-rocky-mountains.jpg?sharp=10&vib=20&w=1200",
-        description: "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now. When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary, I throw myself down among the tall grass by the trickling stream; and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects and flies, then I feel the presence of the Almighty, who formed us in his own image.",
-        date: new Date('October 23, 2016'),
-        momentDate: moment().subtract(1, 'day').calendar(),
-        votes: 2,
-        commentView: false,
-        comments: [
-          {
-            author: "Haleyur",
-            comment: "You've got to be kidding me.",
-
-          },
-          {
-            author: "James",
-            comment: "Word.",
-
-          }
-        ]
-
+    }, {
+      author: "Scotty K",
+      comment: "Listen to Ten Junk Miles for updates on last year's race!",
 
     }]
+
+  }, {
+    id: 1,
+    title: "Zion 100",
+    author: "Ethan Matyas",
+    image: "https://www.ultrarunning.com/wp-content/uploads/2014/04/Zion-12-600x336.jpg",
+    description: "A challenging, scenic run through the southern Utah desert adjacent to Zion National Park. 4 distances will be offered in 2015- a Half Marathon, 50k, 100k, and a 100 miler. The 100 miler and 100k will be run on Friday, with the half marathon and 50k on Saturday. The 100 mile course includes 4 steep climbs onto mesas that offer incredible views of the varied geological features of the area.",
+    date: new Date('October 23, 2016'),
+    momentDate: moment().subtract(1, 'day').calendar(),
+    votes: 3,
+    commentView: false,
+    comments: [{
+      author: "Haleyur",
+      comment: "You've got to be kidding me.",
+
+    }, {
+      author: "Sam T",
+      comment: "Beautiful!  Want to do that one.",
+
+    }]
+  }, {
+    id: 2,
+    title: "Vermont 100",
+    author: "Diane Eastman",
+    image: "http://levelrenner.com/wp-content/uploads/2015/07/emily-levan-vt-100k-ben-kimball-7.29.151.jpg",
+    description: "The Vermont 100 Endurance Race is one of the original 100 mile runs in the USA and a part of the Grand Slam Series of Ultrarunning. Each year, 300 runners attempt to finish this hilly race over beautiful Vermont back roads and trails under the 30 hour cutoff point, and a well-trained few finish in under 24 hours. The race proceeds support Vermont Adaptive.",
+    date: new Date('September 12, 2016'),
+    momentDate: moment().subtract(1, 'day').calendar(),
+    votes: 6,
+    commentView: false,
+    comments: [{
+        author: "Skip",
+        comment: "Thatta girl!",
+
+      }
+
+    ]
+
+
+  }, {
+    id: 3,
+    title: "Ultra Trail Mont Blanc",
+    author: "Matt Menacher",
+    image: "http://jogging.lavenir.net/wp-content/uploads/2013/12/UTMB9.jpg",
+    description: "Mountain race, with numerous passages in high altitude (>2500m), in difficult weather conditions (night, wind, cold, rain or snow), that needs a very good training, adapted equipment and a real capacity of personal autonomy.",
+    date: new Date('October 26, 2016'),
+    momentDate: moment().subtract(1, 'day').calendar(),
+    votes: 15,
+    commentView: false,
+    comments: [{
+      author: "Amy",
+      comment: "Amazeballs.",
+
+    }, {
+      author: "Sam T",
+      comment: "Holy Moly!"
+
+    }]
+
+
+  }]
 
 
 

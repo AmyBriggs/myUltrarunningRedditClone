@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css" media="screen" title="no title">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
 </head>
 
 <body ng-app="redditClone" ng-controller="MainController" ng-cloak>
@@ -16,7 +18,7 @@
     <nav class="nav navbar-default">
         <div class="container-fluid nav-container">
             <div class="navbar-header">
-                <a class="navbar-brand" id="header" href="">My Reddit Clone</a>
+                <a class="navbar-brand" id="header" href="">My Ultrarunning Reddit Clone</a>
             </div>
 
             <!-- Add post -->
@@ -40,7 +42,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="view.search" placeholder="Search">
                 </div>
-                <button type="submit" class="btn btn-default">Go!</button>
+                <button type="submit" id="go" class="btn btn-default">Go!</button>
             </form>
         </div>
 
@@ -48,11 +50,11 @@
 
     <!-- Container for Post Form -->
 
-    <div class="container-fluid" ng-show="createPostForm" id="post-view" ng-cloak>
+    <div class="container-fluid animated slideInDown" ng-show="createPostForm" id="post-view" ng-cloak>
         <div class="row">
             <div class="col-md-10 col-md-offset-1 post-view-design">
                 <div class="page header">
-                    <h1 class="text-center">Add a Post</h1></div>
+                    <h1 class="text-center animated fadeInLeftBig">Add a Post</h1></div>
 
 
                 <!-- ng-submit="submitForm(postForm.$valid)" -->
@@ -100,7 +102,7 @@
         <div class="row">
             <ul class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
 
-                <div ng-repeat="post in view.posts | orderBy: dropdown | filter: view.search" class="posts col-lg-12">
+                <div ng-repeat="post in view.posts | orderBy: dropdown | filter: view.search" class="posts col-lg-12 animated slideInUp">
 
                     <img ng-src="{{ post.image }}" alt="Image" class="col-lg-3" />
                     <h4>{{ post.title }}  |
@@ -114,11 +116,11 @@
                     <br>
                     <br>
 
-                    <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>&nbsp;&nbsp; {{ post.momentDate }}
+                    <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>&nbsp; {{ post.momentDate }}&nbsp;
                     <i class="glyphicon glyphicon-comment" aria-hidden="true"></i>&nbsp;&nbsp;{{ post.comments.length }}
                     <a href="" ng-click="toggleComments(post)">
                         <ng-pluralize count="post.comments.length" when="{ '1': ' Comment', 'other': ' Comments'}">
-                    </a> &nbsp;&nbsp;|&nbsp;&nbsp;
+                    </a>
 
                     <!-- Add Comment -->
 
@@ -126,14 +128,14 @@
                     <br>
                     <br>
 
-                    <div class="col-lg-12" ng-show="post.commentView" id="comment-view">
+                    <div class="col-lg-12 animated slideInRight" ng-show="post.commentView" id="comment-view">
 
                         <form name="post.commentForm" ng-submit="post.submitCommentForm()">
                             <!-- Add comment -->
                             <label for="author">Author</label>
-                            <input type="text" id="by" name="author" ng-model="newComment.author" required>
+                            <input type="text" id="by" name="author" ng-model="post.newComment.author" required>
                             <label for="comment">Comment</label>
-                            <input type="text" id="content" name="comment" ng-model="newComment.comment" required>
+                            <input type="text" id="content" name="comment" ng-model="post.newComment.comment" required>
 
                             <button type="button" name="button" ng-click="submitComment(post)">submit comment</button>
                         </form>
@@ -142,7 +144,7 @@
                         <div ng-repeat="data in post.comments">
 
                             <p>{{ data.comment }} <small>&nbsp;&nbsp; - {{ data.author }}</small></p>
-                            <!-- <small>{{ data.date | date: 'fullDate '}}</small> -->
+
 
 
 
@@ -170,9 +172,8 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js">
-
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
     <!-- <script src="components/moment/moment.js"></script>
     <script src="components/angular-moment/angular-moment.js"></script> -->
     <script src="app.js"></script>
